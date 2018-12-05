@@ -8,12 +8,7 @@
 
 ```gradle
 allprojects {
-	repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
-dependencies {
-	        implementation 'com.github.criske:TitledLayout:1.0'
+	repositories {maven { url 'https://jitpack.io' }}
 }
+implementation 'com.github.criske:TitledLayout:1.0'
 ```
