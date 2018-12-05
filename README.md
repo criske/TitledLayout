@@ -19,5 +19,5 @@ Rough implemetation of titled layout in android.
 allprojects {
 	repositories {maven { url 'https://jitpack.io' }}
 }
-implementation 'com.github.criske:TitledLayout:1.0'
+implementation 'com.github.criske:TitledLayout:${version}'
 ```
