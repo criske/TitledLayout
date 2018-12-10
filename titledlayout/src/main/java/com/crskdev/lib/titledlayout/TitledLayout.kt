@@ -19,21 +19,29 @@ class TitledLayout : FrameLayout {
         val borderLayout = LayoutInflater.from(context).inflate(R.layout.titled_layout, null, false)
         addView(borderLayout)
 
-        var title = ""
+        var title: String? = null
         var layoutContent = -1
         context.theme.obtainStyledAttributes(attrs, R.styleable.TitledLayout, 0, 0)
             .apply {
                 try {
-                    title = getString(R.styleable.TitledLayout_title) ?: ""
-                    layoutContent = getResourceId(R.styleable.TitledLayout_layout_content, -1)
+                    //prioritizing string resource over hardcoded title
+                    title = getResourceId(R.styleable.TitledLayout_titleRes, -1)
+                                .takeIf { it != -1 }
+                                ?.let { getString(it) }
+                            ?: getString(R.styleable.TitledLayout_title)
+                    layoutContent = getResourceId(R.styleable.TitledLayout_layout_content, R.layout.title_layout_default_content)
                 } finally {
                     recycle()
                 }
             }
-        borderLayout.findViewById<TextView>(R.id.titled_layout_text_title).text = title
-        borderLayout.findViewById<ViewStub>(R.id.titled_layout_stub).apply {
-            layoutResource = layoutContent
-        }.inflate()
+        with(borderLayout) {
+            findViewById<TextView>(R.id.titled_layout_text_title).text =
+                    title
+            findViewById<ViewStub>(R.id.titled_layout_stub).apply {
+                layoutResource = layoutContent
+            }.inflate()
+            Unit
+        }
     }
 
 }
